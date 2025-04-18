@@ -13,7 +13,7 @@ const routes = require("./routes/index");
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://fundacite.vercel.app",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
