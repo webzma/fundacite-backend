@@ -19,7 +19,6 @@ const register = async (req, res) => {
 
     const validatedEmail = validations.isEmailValid(email);
     const validatedName = validations.validName(name);
-    // Validar password
 
     if (!validatedEmail) {
       return res.status(400).json({
