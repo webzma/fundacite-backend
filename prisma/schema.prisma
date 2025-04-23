@@ -15,27 +15,59 @@ model User {
 }
 
 model Student {
-  id             BigInt  @id @default(autoincrement())
+  id             BigInt       @id @default(autoincrement())
   name           String
   lastname       String
-  email          String  @unique
+  email          String       @unique
   phoneNumber    String?
   enrollmentDate DateTime
   enrollments    Enrollment[]
 }
 
 model Activity {
-  id           BigInt    @id @default(autoincrement())
+  id           BigInt         @id @default(autoincrement())
   name         String
   type         ActivityType
   description  String?
   startDate    DateTime
   endDate      DateTime
-  instructor   Instructor? @relation(fields: [instructorId], references: [id])
   instructorId BigInt?
-  duration     Int?       // Assuming duration is stored as an integer representing minutes
+  duration     Int?
   status       ActivityStatus @default(INACTIVE)
+  instructor   Instructor?    @relation(fields: [instructorId], references: [id])
   enrollments  Enrollment[]
+}
+
+model Instructor {
+  id         BigInt     @id @default(autoincrement())
+  name       String
+  email      String     @unique
+  expertise  String?
+  activities Activity[]
+}
+
+model Enrollment {
+  id             BigInt   @id @default(autoincrement())
+  studentId      BigInt
+  activityId     BigInt
+  enrollmentDate DateTime @default(now())
+  activity       Activity @relation(fields: [activityId], references: [id])
+  student        Student  @relation(fields: [studentId], references: [id])
+}
+
+model Municipality {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  parishes Parish[]
+}
+
+model Parish {
+  id             Int          @id @default(autoincrement())
+  name           String
+  municipalityId Int
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  @@unique([name, municipalityId])
 }
 
 enum ActivityType {
@@ -55,39 +87,3 @@ enum UserRole {
   ANALISTA
   DIRECTOR_GENERAL
 }
-
-model Instructor {
-  id        BigInt  @id @default(autoincrement())
-  name      String
-  email     String  @unique
-  expertise String?
-  activities Activity[]
-}
-
-
-model Enrollment {
-  id             BigInt  @id @default(autoincrement())
-  student        Student @relation(fields: [studentId], references: [id])
-  studentId      BigInt
-  activity       Activity @relation(fields: [activityId], references: [id])
-  activityId     BigInt
-  enrollmentDate DateTime @default(now())
-}
-
-model Municipality {
-  id           Int           @id @default(autoincrement())
-  name         String
-  parishes     Parish[]
-
-  @@unique([name])
-}
-
-model Parish {
-  id             Int          @id @default(autoincrement())
-  name           String
-  municipalityId Int
-  municipality   Municipality @relation(fields: [municipalityId], references: [id])
-
-  @@unique([name, municipalityId])
-}
-
