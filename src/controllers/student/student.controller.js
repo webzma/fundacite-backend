@@ -11,6 +11,4 @@ const getAllStudents = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAllStudents,
-};
+module.exports = { getAllStudents };

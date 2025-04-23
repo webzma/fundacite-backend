@@ -11,6 +11,4 @@ const getAllStudents = async () => {
   }
 };
 
-module.exports = {
-  getAllStudents,
-};
+module.exports = { getAllStudents };

@@ -7,9 +7,4 @@ router.use("/auth", authRoute);
 router.use("/students", studentRoute);
 router.use("/municipality", municipalityRoute);
 
-// Delete after testing
-router.get("/", (req, res) => {
-  res.send("Hello World from the API");
-});
-
 module.exports = router;
