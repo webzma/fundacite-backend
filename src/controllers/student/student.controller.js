@@ -3,7 +3,6 @@ const studentService = require("../../services/student/student.service");
 const getAllStudents = async (req, res) => {
   try {
     const students = await studentService.getAllStudents();
-    console.log(students);
     res.status(200).json(students);
   } catch (error) {
     res
@@ -14,8 +13,4 @@ const getAllStudents = async (req, res) => {
 
 module.exports = {
   getAllStudents,
-  // getStudentById,
-  // createStudent,
-  // updateStudent,
-  // deleteStudent,
 };

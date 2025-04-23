@@ -13,8 +13,4 @@ const getAllStudents = async () => {
 
 module.exports = {
   getAllStudents,
-  // getStudentById,
-  // createStudent,
-  // updateStudent,
-  // deleteStudent,
 };
