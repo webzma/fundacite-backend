@@ -34,7 +34,7 @@ model Activity {
   instructor   Instructor? @relation(fields: [instructorId], references: [id])
   instructorId BigInt?
   duration     Int?       // Assuming duration is stored as an integer representing minutes
-  status       ActivityStatus @default(PLANNED)
+  status       ActivityStatus @default(INACTIVE)
   enrollments  Enrollment[]
 }
 
@@ -45,9 +45,8 @@ enum ActivityType {
 }
 
 enum ActivityStatus {
-  PLANNED
-  ONGOING
-  COMPLETED
+  ACTIVE
+  INACTIVE
   CANCELLED
 }
 
@@ -74,3 +73,21 @@ model Enrollment {
   activityId     BigInt
   enrollmentDate DateTime @default(now())
 }
+
+model Municipality {
+  id           Int           @id @default(autoincrement())
+  name         String
+  parishes     Parish[]
+
+  @@unique([name])
+}
+
+model Parish {
+  id             Int          @id @default(autoincrement())
+  name           String
+  municipalityId Int
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  @@unique([name, municipalityId])
+}
+
